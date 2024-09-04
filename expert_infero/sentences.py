@@ -25,7 +25,7 @@ class Sentence:
         elif isinstance(sentence, Implication):
             return And(sentence.antecedent, Not(sentence.consequent))
         else:
-            return
+            raise Exception("must be a logical sentence")
 
     @classmethod
     def parenthesize(cls, s) -> str:

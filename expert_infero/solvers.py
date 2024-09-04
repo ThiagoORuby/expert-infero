@@ -84,3 +84,49 @@ def backward_chaining(
 
     explanation.append("Não foi possível chegar a uma conclusão :(")
     return explanation, False
+
+
+def process_sentence(
+    sentence: Sentence, symhash: dict[str, bool | None], new_facts: list
+):
+    if isinstance(sentence, Symbol):
+        symhash[sentence.name] = True
+    elif isinstance(sentence, Not):
+        if isinstance(sentence, Symbol):
+            symhash[sentence.name] = False
+        else:
+            if isinstance(sentence.operand, Not):
+                process_sentence(sentence.operand.operand, symhash, new_facts)
+            else:
+                process_sentence(
+                    Sentence.apply_demorgan(sentence.operand), symhash, new_facts
+                )
+    elif isinstance(sentence, And):
+        for conjunct in sentence.conjuncts:
+            process_sentence(conjunct, symhash, new_facts)
+    # Impossivel determinar uma disjunção
+    else:
+        new_facts.append(sentence)
+
+
+def forward_chaining(
+    rules: list[Implication], query: Sentence, symhash: dict[str, bool | None]
+):
+    new_facts: list[Or] = []
+    for rule in rules:
+        rule.applied = False  # type: ignore
+    while True:
+        applied_any_rule = False
+        for rule in rules:
+            if not rule.applied and (  # type: ignore
+                rule.antecedent.evaluate(symhash) or rule.antecedent in new_facts
+            ):
+                process_sentence(rule.consequent, symhash, new_facts)
+                rule.applied = True  # type: ignore
+                applied_any_rule = True
+                print(f"Novo fato descoberto: {rule.consequent.formula()}!")
+                if query.evaluate(symhash):
+                    return True
+        if not applied_any_rule:
+            break
+    return query.evaluate(symhash)
