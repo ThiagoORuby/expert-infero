@@ -2,18 +2,18 @@
 
 Expert Infero é uma ferramenta de geração de sistemas especialistas, projetada para facilitar a criação e gerenciamento de inferências. Utilizando uma linguagem específica em arquivos .efo, o Expert Infero organiza seu conhecimento em quatro seções principais:
 
-- Declarações: Onde símbolos são associados a descrições detalhadas, formando a base do conhecimento.
-- Regras: Estrutura que permite construir regras de inferência complexas utilizando os símbolos previamente declarados.
-- Fatos: Seção dedicada a armazenar símbolos previamente determinados dentro do sistema.
-- Query: Onde são especificados os objetivos ou questões que o sistema especialista deve resolver.
+- **Declarações:** Onde símbolos são associados a descrições detalhadas, formando a base do conhecimento.
+- **Regras:** Estrutura que permite construir regras de inferência complexas utilizando os símbolos previamente declarados.
+- **Fatos:** Seção dedicada a armazenar símbolos previamente determinados dentro do sistema.
+- **Query:** Onde são especificados os objetivos ou questões que o sistema especialista deve resolver.
 
 O Expert Infero utiliza encadeamento para frente e para trás. Além disso, conta com um módulo de explanação interativo, que questiona a veracidade de símbolos durante o processo de inferência, oferecendo explicações detalhadas sobre como o algoritmo chegou à solução final. Inspirado no funcionamento do Expert Sinta.
 
 ## Instalação
 
 - Certifique-se de que tem o [Poetry](https://python-poetry.org/docs/) instalado
-- Entre na pasta: `cd expert-infero`
 - Clone o repositório: `git clone https://github.com/ThiagoORuby/expert-infero.git`
+- Entre na pasta: `cd expert-infero`
 - Rode os comandos do poetry: `poetry install` e `poetry shell`
 
 ## Como Usar ?
