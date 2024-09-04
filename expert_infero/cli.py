@@ -40,3 +40,38 @@ expert_infero compile examples/example.efo
     if ctx.invoked_subcommand:
         return
     console.print(Padding(message, pad=(0, 0, 0, 2)))
+
+
+@app.command()
+def compile(file: Path = Argument(help="arquivo .efo a ser compilado")):
+    extension = ".efo"
+
+    if file.suffix != extension:
+        echo("ERRO: extensão de arquivo desconhecida")
+        raise Exit(1)
+
+    data = file.read_text()
+
+    parser = Parser(data)
+    parser.start()
+
+    for echo_print in parser.program["echos"]:
+        console.print(f"[b]{echo_print}[/]")
+    print("\n")
+
+    explanation, finded = backward_chaining(
+        parser.program["rules"],
+        parser.program["query"],
+        parser.symhash,
+        parser.declarations,
+    )
+
+    console.print(
+        Padding("\n[b]==+==+==+== SOLUTION ==+==+==+==[/]\n", pad=(0, 0, 0, 2))
+    )
+
+    if finded:
+        for step in explanation:
+            console.print(Padding(str(step), pad=(0, 0, 0, 2)))
+    else:
+        console.print(f"[b bright_red]{explanation[0]}[/]\n")
