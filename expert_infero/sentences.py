@@ -101,7 +101,7 @@ class Not(Sentence):
         return "~" + Sentence.parenthesize(self.operand.formula())
 
     def describe(self, descriptions):
-        return "~" + self.operand.describe(descriptions)
+        return "NÃO " + self.operand.describe(descriptions)
 
     def symbols(self):
         return self.operand.symbols()
@@ -141,7 +141,7 @@ class And(Sentence):
     def describe(self, descriptions):
         if len(self.conjuncts) == 1:
             return self.conjuncts[0].describe(descriptions)
-        return " & ".join(
+        return " E ".join(
             [conjunct.describe(descriptions) for conjunct in self.conjuncts]
         )
 
@@ -161,11 +161,10 @@ class Or(Sentence):
     def __repr__(self):
         disjuncts = ", ".join([str(disjunct) for disjunct in self.disjuncts])
         return f"Or({disjuncts})"
-    
+
     def add(self, disjunct):
         Sentence.validate(disjunct)
         self.disjuncts.append(disjunct)
-
 
     def evaluate(self, model):
         if any(disjunct.evaluate(model) for disjunct in self.disjuncts):
@@ -184,7 +183,7 @@ class Or(Sentence):
     def describe(self, descriptions):
         if len(self.disjuncts) == 1:
             return self.disjuncts[0].describe(descriptions)
-        return " | ".join(
+        return " OU ".join(
             [disjunct.describe(descriptions) for disjunct in self.disjuncts]
         )
 
@@ -220,7 +219,7 @@ class Implication(Sentence):
     def describe(self, descriptions):
         antecedent = self.antecedent.describe(descriptions)
         consequent = self.consequent.describe(descriptions)
-        return f"{antecedent} -> {consequent}"
+        return f"SE {antecedent} ENTÃO {consequent}"
 
     def symbols(self):
         return set.union(self.antecedent.symbols(), self.consequent.symbols())
