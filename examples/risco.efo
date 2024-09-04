@@ -1,0 +1,41 @@
+init:
+    echo "============================"
+    echo "ANALISE DE RISCO DE CRÉDITO"
+    echo "============================"
+end
+
+declarations:
+    GA := "Garantia Adequada"
+    GN := "Nenhuma Garantia"
+    HB := "História de crédito boa"
+    HR := "História de crédito ruim"
+    HD := "História de crédito desconhecida"
+    R1 := "Renda <= 15k"
+    R2 := "15k < Renda <= 35k"
+    R3 := "Renda > 35k"
+    DA := "Divida Alta"
+    DB := "Dívida Baixa"
+    RA := "Risco Alto"
+    RM := "Risco Moderado"
+    RB := "Risco Baixo"
+end
+
+rules:
+    GA & HB -> RB
+    GA & HD -> RM
+    GA & HR -> RA
+    GN & R3 -> RB
+    GN & R2 & DB -> RB
+    GN & R2 & DA -> RM
+    GN & R1 & DB -> RM
+    GN & R1 & DA -> RA
+end
+
+facts:
+end
+
+query:
+    RB
+    RM
+    RA
+end

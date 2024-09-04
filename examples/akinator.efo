@@ -1,0 +1,52 @@
+init:
+echo "===================="
+echo "   MINI AKINATOR    "
+echo "===================="
+echo "Descobrirei qual classe de animal você está pensando!"
+end
+
+declarations:
+Leite := "Produz leite"
+Pena := "Possui penas"
+Nada := "Possui nadadeiras"
+CV := "Possui Coluna Vertebral"
+Voa := "Consegue voar"
+Preda := "É um predador"
+Perna := "Possui pernas"
+Aqua := "É aquático"
+Ovo := "Põe ovos"
+
+M := "Mamífero"
+P := "Pássaro"
+R := "Réptil"
+F := "Peixe"
+A := "Anfíbio"
+B := "Inseto"
+I := "Invertebrado"
+end
+
+rules:
+Leite -> M
+~Leite & Pena -> P
+~Leite & ~Pena & Nada -> F
+~Leite & ~Pena & ~Nada & CV & ~Aqua -> R
+~Leite & ~Pena & ~Nada & CV & Aqua & ~Ovo -> R
+~Leite & ~Pena & ~Nada & CV & Aqua & Ovo -> A
+~Leite & ~Pena & ~Nada & ~CV & Voa -> B
+~Leite & ~Pena & ~Nada & ~CV & ~Voa & Preda -> I 
+~Leite & ~Pena & ~Nada & ~CV & ~Voa & ~Preda & Perna -> B
+~Leite & ~Pena & ~Nada & ~CV & ~Voa & ~Preda & ~Perna -> I
+end
+
+facts:
+end
+
+query:
+M
+P
+R
+A
+F
+B
+I
+end
